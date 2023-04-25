@@ -1,6 +1,6 @@
 from lexer import Lexer
 from parser import build_tree
-#
+from  interpritator import main
 
 if __name__ == "__main__":
     lst = '''program Hello;
@@ -14,10 +14,14 @@ if __name__ == "__main__":
    end.'''
     Lexer.lexer.input(lst)
     counter = 0
+    print("--------------------------------Токены---------------------------------------------")
     while True:
         tok = Lexer.lexer.token()
         if not tok:
             break
         print(tok)
 
+    print("------------------------Абстрактное синтаксическое дерево--------------------------")
     print(build_tree(lst))
+    print("------------------------Трех адресный код--------------------------")
+    print(main(lst))

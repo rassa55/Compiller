@@ -478,17 +478,7 @@ def compile_llvm(source):
 
 
 
-if __name__ == '__main__':
-    data = '''program Hello;
-    var a,b,c : integer
-    begin
-        a = 5 - 1;
-        b = 10 + 6;
-        c = a * b;
-        print("a * b =");
-        print(c)
-    end.'''
-
+def main(data):
     tree = build_tree(data)
     bloc = Block()
     bloc.initname('Main')
