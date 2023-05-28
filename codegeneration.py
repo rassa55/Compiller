@@ -72,6 +72,7 @@ def GenerateCode(parentblock, tree, scope, IsMain , table):
                     new.initname(part.type)
                     parentblock.append(new)
                 if scope != 'global' and not (scope.startswith(' ')):
+                    #print(table)
                     new.append(('alloc_' + typeconv[table[scope].get(scope)[0]], scope))
                     id = new_temp(typeconv[table[scope].get(scope)[0]])
                     new.append(('literal_'+typeconv[table[scope].get(scope)[0]], 0 , id))
@@ -487,9 +488,8 @@ def GenerateForExres(tree, scope, exp, table):
         else:
             for part in tree.parts:
                 end = GenerateForExres(part, scope, exp, table)
-    #print(tree)
-    return end
 
+    return end
 
 def prTr(Block, sink):
 
@@ -507,3 +507,8 @@ def prTr(Block, sink):
 
             print(' ' * sink * 3, end='')
             cprint(a, 'cyan')
+
+
+
+
+

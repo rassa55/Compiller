@@ -4,6 +4,7 @@ from llvmlite.ir import (
     GlobalVariable, FunctionType , ArrayType
 )
 from codegeneration import GenerateCode, Block, prTr
+
 from parser import build_tree, getTable
 
 int_type = IntType(32)
@@ -14,7 +15,6 @@ void_type = VoidType()
 typemap = {
     'int': int_type,
     'float': float_type,
-
     'bool': bool_type,
     'void': void_type
 }
@@ -105,7 +105,7 @@ class GenerateLLVM(object):
 
     def emit_literal_string(self, value, target):
         value = value + '\0'
-        c_str_val =  Constant(ArrayType(IntType(8), len(value)),bytearray(value.encode("utf8")))
+        c_str_val = Constant(ArrayType(IntType(8), len(value)),bytearray(value.encode("utf8")))
         var = self.builder.alloca(c_str_val.type,name= target)
         self.builder.store(c_str_val,var)
         self.temps[target] = var
@@ -129,9 +129,6 @@ class GenerateLLVM(object):
         var = GlobalVariable(self.module, float_type, name=name)
         var.initializer = Constant(float_type, 0)
         self.globals[name] = var
-
-
-
 
     def lookup_var(self, name):
         if name in self.locals:
@@ -464,8 +461,6 @@ class GenerateBlocksLLVM( object ):
 afterloops =[]
 def compile_llvm(source):
 
-
-
     functions = source.instructions
     #print(functions)
     generator = GenerateLLVM('@mielpops')
@@ -477,11 +472,12 @@ def compile_llvm(source):
     return str(generator.module)
 
 
-
 def main(data):
     tree = build_tree(data)
     bloc = Block()
     bloc.initname('Main')
-    bloc = GenerateCode(bloc, tree, 'global', False, getTable(tree))
-    prTr(bloc, 1)
+    bloc = GenerateCode(bloc, tree, 'global',False, getTable(tree))
+    prTr(bloc,1)
     llvm_code = compile_llvm(bloc)
+    with open('Code.ll', 'w') as f:
+        f.write(llvm_code)

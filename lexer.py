@@ -40,7 +40,7 @@ tokens = [
              'ID', 'COMPARE', 'DOT', 'REAL_DIGIT', 'DIVIDE'
          ] + list(reserved.values())
 
-# для каждого токена из массива мы должны написать его определение вида t_ИМЯТОКЕНА = регулярка
+
 t_DIVIDE = r'\/'
 t_DOT = r'\.'
 t_COMPARE = r'\>\=|\<\=|\>|\<|\<\>'
